@@ -1,0 +1,19 @@
+.nav-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 50px;
+}
+
+img{
+    height: 30px;
+    width: auto;
+}
+
+button{
+    border-radius: 44px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-color: blue;
+    color: blue;
+}

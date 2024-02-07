@@ -1,0 +1,17 @@
+.containerContent {
+    background: linear-gradient(to bottom right, rgb(42, 42, 227), rgb(235, 75, 75));
+    background-repeat: no-repeat;
+    padding-inline: 50px;
+    margin-inline: 30px;
+    
+}
+
+.box{
+    background: white;
+    padding: 40px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-radius: 25px;
+}
