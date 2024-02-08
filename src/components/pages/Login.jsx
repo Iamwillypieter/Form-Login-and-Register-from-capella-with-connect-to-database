@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
-import { axios } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
