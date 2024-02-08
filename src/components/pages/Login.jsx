@@ -7,15 +7,35 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
+import { axios } from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const navigate = useNavigate()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:5173/login', { email, password })
+            .then(result => {
+                console.log(result)
+                if (result.data === "Success") {
+                    navigate('/home')
+                }
+            })
+            .catch(err => console.log(result))
+    }
+
+
     return (
         <>
             <Navbar>
                 <button>Login</button>
             </Navbar>
             <Content>
-                <Container>
+                <Container onSubmit={handleSubmit}>
                     <Row>
                         <Col></Col>
                         <Col>
@@ -27,7 +47,7 @@ const Login = () => {
                                         <Col>
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                                 <Form.Label>Email <span style={{ color: 'red' }}>*</span></Form.Label>
-                                                <Form.Control type="email" placeholder="capella@gmail.com" />
+                                                <Form.Control type="email" placeholder="capella@gmail.com" onChange={(e) => setEmail(e.target.value)} />
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -35,7 +55,7 @@ const Login = () => {
                                         <Col>
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                                 <Form.Label>Password <span style={{ color: 'red' }}>*</span></Form.Label>
-                                                <Form.Control type="password" placeholder="Masukkan Password Anda" />
+                                                <Form.Control type="password" placeholder="Masukkan Password Anda" onChange={(e) => setPassword(e.target.value)} />
                                             </Form.Group>
                                         </Col>
                                     </Row>
