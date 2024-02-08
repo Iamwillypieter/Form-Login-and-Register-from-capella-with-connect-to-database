@@ -11,13 +11,14 @@ const Input = () => {
   const [name, setName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const [identy, setIdenty] = useState()
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios.post('http://localhost:5173/register', {name, email, password})
+    axios.post('http://localhost:3000/register', {name, email, password, identy})
   .then(result => {console.log(result)
-    navigate('/login')
+    navigate('/')
   })
     .catch(err => console.log(err))
   }
@@ -57,7 +58,7 @@ const Input = () => {
           <Col>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Tanggal Lahir <span style={{ color: 'red' }}>*</span></Form.Label>
-              <Form.Control type="date" placeholder="Masukkan Tanggal Lahir" />
+              <Form.Control type="date" placeholder="Masukkan Tanggal Lahir" onChange={(e) => setIdenty(e.target.value)} />
             </Form.Group>
           </Col>
           <Col></Col>
@@ -78,7 +79,7 @@ const Input = () => {
           </Col>
         </Row>
         <Row>
-          <Button variant="primary">Register</Button>
+          <Button variant="primary" onClick={handleSubmit}>Register</Button>
         </Row>
       </Container>
     </Form>

@@ -18,7 +18,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5173/login', { email, password })
+        axios.post('http://localhost:3000/login', { email, password })
             .then(result => {
                 console.log(result)
                 if (result.data === "Success") {
@@ -75,7 +75,7 @@ const Login = () => {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Button variant="primary">Register</Button>{' '}
+                                        <Button variant="primary" onClick={handleSubmit}>Login</Button>
                                     </Row>
                                 </Container>
                             </div>
