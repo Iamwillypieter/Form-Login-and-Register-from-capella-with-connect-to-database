@@ -3,13 +3,15 @@ import Navbar from "../navbar/Navbar";
 import Content from "../content/Content";
 import Footer from "../footer/footer";
 import Input from "../form/Input";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     return (
         <>
             <Navbar>
                 <h2>Registrasi & Aktivasi akun melalui email</h2>
-                <button>Login</button>
+                {/* Menggunakan Link untuk merouting ke halaman Login */}
+                <Link to={'/'}><button>Login</button></Link>
             </Navbar>
             <Content>
                 <div className="box">

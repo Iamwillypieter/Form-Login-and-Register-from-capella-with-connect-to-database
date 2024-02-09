@@ -4,7 +4,7 @@ const EmployeeSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    identy: String
+    birthdate: String
 })
 
 const EmployeeModel = mongoose.model("employees", EmployeeSchema)

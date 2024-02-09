@@ -9,20 +9,32 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [agreementChecked, setAgreementChecked] = useState(false)
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        if (!email || !password) {
+            alert('Please fill the blank');
+            return;
+        }
+        if (!agreementChecked) {
+            alert('Please Check the agreement');
+            return;
+        }
         axios.post('http://localhost:3000/login', { email, password })
             .then(result => {
                 console.log(result)
                 if (result.data === "Success") {
+                    alert("Welcome")
                     navigate('/home')
+                } else {
+                    alert("Account not found")
                 }
             })
             .catch(err => console.log(result))
@@ -32,7 +44,8 @@ const Login = () => {
     return (
         <>
             <Navbar>
-                <button>Login</button>
+                {/* Menggunakan Link untuk merouting ke halaman Register */}
+                <Link to={"/register"}><button>Register</button></Link>
             </Navbar>
             <Content>
                 <Container onSubmit={handleSubmit}>
@@ -68,6 +81,8 @@ const Login = () => {
                                                             type={type}
                                                             id={`default-${type}`}
                                                             label={`Remember me`}
+                                                            checked={agreementChecked}
+                                                            onChange={(e) => setAgreementChecked(e.target.checked)}
                                                         />
                                                     </div>
                                                 ))}

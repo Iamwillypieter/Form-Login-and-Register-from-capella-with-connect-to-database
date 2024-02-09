@@ -17,10 +17,10 @@ app.post('/login', (req, res) => {
             if(user.password === password) {
                 res.json("Success")
             } else {
-                res.json("the password is incorrect")
+                res.json("Password is incorrect")
             }
         } else {
-            res.json("No Record existed")
+            res.json("Account didn't found")
         }
     })
 })
