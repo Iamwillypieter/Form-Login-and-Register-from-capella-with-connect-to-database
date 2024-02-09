@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const Input = () => {
   const [name, setName] = useState()
@@ -13,8 +14,25 @@ const Input = () => {
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
   const [birthdate, setBirthdate] = useState()
+  
   const [agreementChecked, setAgreementChecked] = useState(false);
   const navigate = useNavigate()
+
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    function simulateNetworkRequest() {
+      return new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+
+    if (isLoading) {
+      simulateNetworkRequest().then(() => {
+        setLoading(false);
+      });
+    }
+  }, [isLoading]);
+
+  const handleClick = () => setLoading(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +52,8 @@ const Input = () => {
       alert('Anda harus menyetujui ketentuan dan pernyataan yang berlaku!');
       return;
     }
+    handleClick();
+    console.log(isLoading)
     axios.post('http://localhost:3000/register', { name, email, password, birthdate })
       .then(result => {
         console.log(result)
@@ -101,7 +121,7 @@ const Input = () => {
           </Col>
         </Row>
         <Row>
-          <Button variant="primary" onClick={handleSubmit}>Register</Button>
+          <Button variant="primary" disabled={isLoading} onClick={handleSubmit} >Register</Button>
         </Row>
       </Container>
     </Form>

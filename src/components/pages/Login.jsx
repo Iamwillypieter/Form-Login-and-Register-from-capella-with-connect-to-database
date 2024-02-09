@@ -7,15 +7,31 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const Login = () => {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [agreementChecked, setAgreementChecked] = useState(false)
     const navigate = useNavigate()
+
+    const [isLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+        function simulateNetworkRequest() {
+            return new Promise((resolve) => setTimeout(resolve, 2000));
+        }
+
+        if (isLoading) {
+            simulateNetworkRequest().then(() => {
+                setLoading(false);
+            });
+        }
+    }, [isLoading]);
+
+    const handleClick = () => setLoading(true);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,12 +43,15 @@ const Login = () => {
             alert('Please Check the agreement');
             return;
         }
+        handleClick();
+        console.log(isLoading)
         axios.post('http://localhost:3000/login', { email, password })
             .then(result => {
                 console.log(result)
                 if (result.data === "Success") {
                     alert("Welcome")
                     navigate('/home')
+                    localStorage.setItem('isLogin', true);
                 } else {
                     alert("Account not found")
                 }
@@ -90,7 +109,7 @@ const Login = () => {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Button variant="primary" onClick={handleSubmit}>Login</Button>
+                                        <Button variant="primary" disabled={isLoading} onClick={handleSubmit}>Login</Button>
                                     </Row>
                                 </Container>
                             </div>
