@@ -7,7 +7,9 @@ const EmployeeSchema = new mongoose.Schema({
     birthdate: Date,
     registerdate: Date,
     loginDateTime: Date,
-    logoutDateTime: Date
+    logoutDateTime: Date,
+    statusLogin: Boolean,
+    status: Boolean
 })
 
 const EmployeeModel = mongoose.model("employees", EmployeeSchema)

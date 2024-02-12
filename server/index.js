@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
+// const router = express.Router();
 const cors = require("cors");
 const EmployeeModel = require('./models/employee');
 
@@ -9,13 +10,25 @@ app.use(cors());
 
 mongoose.connect("mongodb://127.0.0.1:27017/employee");
 
+// router.get('/users', async (req, res) => {
+//     try {
+//         const users = await EmployeeModel.find();
+//         res.json(users);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ message: "Server Error" });
+//     }
+// });
+
+// module.exports = router;
+
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     EmployeeModel.findOne({ email: email })
         .then(async user => {
             if (user) {
                 if (user.password === password) {
-                    await EmployeeModel.findOneAndUpdate({ email: email }, { $set: { loginDateTime: Date.now() } }, { new: true })
+                    await EmployeeModel.findOneAndUpdate({ email: email }, { $set: { loginDateTime: Date.now(), statusLogin: true} }, { new: true })
                     res.json("Success")
                 } else {
                     res.json("Password is incorrect")
@@ -26,14 +39,30 @@ app.post('/login', (req, res) => {
         })
 })
 
+// logoutDatabase tidak terekam di database
+// app.post('/home', (req, res) => {
+//     const { email } = req.body;
+//     EmployeeModel.findOneAndUpdate({ email: email })
+//         .then(async updatedUser => {
+//             if (updatedUser) {
+//                 await EmployeeModel.findOneAndUpdate({ email: email }, { $set: { logoutDateTime: Date.now() } }, { new: true })
+//                 res.json("Logout time recorded successfully");
+//             } else {
+//                 res.status(404).json("User not found");
+//             }
+//         })
+//         .catch(error => {
+//             console.error("Error occurred while updating logout time:", error);
+//             res.status(500).json("Internal Server Error");
+//         });
+// });
 
+
+
+// logoutDataTime terekam di Database
 app.post('/home', (req, res) => {
     const { email } = req.body;
-
-    // Pastikan pengguna sudah diautentikasi, misalnya menggunakan token otentikasi
-    
-    // Lakukan pembaruan pada logoutDateTime
-    EmployeeModel.findOneAndUpdate({ email: email }, { $set: { logoutDateTime: Date.now() }}, { new: true })
+    EmployeeModel.findOneAndUpdate({ email: email }, { $set: { logoutDateTime: Date.now(), statusLogin: false }}, { new: true })
         .then(updatedUser => {
             if (updatedUser) {
                 res.json("Logout time recorded successfully");
@@ -46,8 +75,6 @@ app.post('/home', (req, res) => {
             res.status(500).json("Internal Server Error");
         });
 });
-
-
 
 app.post('/register', (req, res) => {
     console.log(req.body)

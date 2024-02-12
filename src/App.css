@@ -7,3 +7,17 @@
 .error{
     color: red;
 }
+
+/* Styling for user list */
+.user-list {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  /* Styling for buttons */
+  .btn {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  
